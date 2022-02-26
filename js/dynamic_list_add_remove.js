@@ -76,6 +76,22 @@ const DYNAMIC_LIST = {
         data.name = nameArr;
         data.age = ageArr;
 
+
+        // duplication check
+        const set = new Set();
+        idArr.forEach(function (item, index){
+            set.add(idArr[index] + nameArr[index] + ageArr[index]);
+        })
+
+        console.log( ">>> 전체 길이 : " + idArr.length );
+        console.log( ">>> 중복 제거 길이 : " + set.size );
+
+        // 전체 입력항목 길이와 중복제거한(Set에 입력) 길이가 다르면 중복 데이터가 있다고 판단.
+        if( idArr.length != set.size ) {
+            alert("Duplicated!");
+            return false;
+        }
+
         let data2 = [];
         idArr.forEach(function (item, index){
             data2.push({
@@ -83,10 +99,11 @@ const DYNAMIC_LIST = {
                name:nameArr[index],
                age: ageArr[index],
             });
-        })
+        });
 
         console.log(data);
         console.log(data2);
+        console.log(set);
     }
 }
 
