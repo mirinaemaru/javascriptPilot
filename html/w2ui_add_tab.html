@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>W2UI Demo: tabs/8</title>
+    <title>W2UI Demo: tabs/8, multi agGrid</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.js"></script>
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
@@ -60,6 +60,10 @@
                 { make: "Toyota"    , model: "Celica", price: 135000 },
                 { make: "Ford"      , model: "Mondeo", price: 132000 },
                 { make: "Porsche"   , model: "Boxter", price: 172000 }]},
+        { id:'2004', text:'2004', rowData:[
+                { make: "Toyota"    , model: "Celica", price: 25000 },
+                { make: "Ford"      , model: "Mondeo", price: 22000 },
+                { make: "Porsche"   , model: "Boxter", price: 22000 }]},
     ];
     W2UI_TARIFF.init( 'tariffTabs', tabObj, tabObj[0]);
 
@@ -75,17 +79,20 @@
         let agGridTmpl = $.templates("#agGridTemplate");
 
         tabObj.forEach((tab)=> {
-            console.log(tab);
-
+            // tariff grid div를 렌러링 하지만 default는 숨김(display:none;)
             $("#gridList").append( agGridTmpl.render(tab) );
+
             gridOptions.rowData = tab.rowData;
             new agGrid.Grid(document.querySelector('#tariffGrid_'+tab.id), gridOptions);
         });
+
+        // tariffGridTab 클래스를 가지는 agGrid를 show
+        $('.tariffGridTab').first().show();
     });
 </script>
 
 <script id="agGridTemplate" type="text/x-jsrender">
-  <div id="tariffGrid_{{:id}}" style="height: 200px; width:310px;" class="ag-theme-alpine tariffGridTab"></div>
+  <div id="tariffGrid_{{:id}}" style="height: 200px; width:310px; display:none;" class="ag-theme-alpine tariffGridTab"></div>
 </script>
 
 </body>
