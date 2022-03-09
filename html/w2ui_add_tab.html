@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>W2UI Demo: tabs/8</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.js"></script>
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+
+    <script src="https://www.jsviews.com/download/jsrender.min.js"></script>
+    <link href="https://www.jsviews.com/samples/samples.css" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.css" />
+
+</head>
+<body>
+
+<div id="tariffTabs" style="width: 100%;"></div>
+<div id="gridList"></div>
+
+<script type="text/javascript">
+
+    let W2UI_TARIFF = {
+        api: {},
+        event: {},
+        data: {
+            id: null,
+            tabs: null,
+            defaultTab: null,
+        },
+        init: function(tabsID, tabsObj, defaultTab) {
+            this.data.id = tabsID;
+            this.data.tabs = tabsObj;
+            this.data.defaultTab = defaultTab;
+
+            this.create();
+        },
+        create: function() {
+            $("#"+W2UI_TARIFF.data.id).w2tabs({
+                name: this.data.id,     // tabs id unique
+                tabs: this.data.tabs,
+                active: this.data.defaultTab.id,
+                onClick: (event)=>{
+                    $('.tariffGridTab').hide();
+                    $('#tariffGrid_'+event.target).show();
+                }
+            });
+        },
+    }
+
+    let tabObj = [
+        { id:'2011', text:'2011', rowData:[
+                { make: "Toyota"    , model: "Celica", price: 35 },
+                { make: "Ford"      , model: "Mondeo", price: 32 },
+                { make: "Porsche"   , model: "Boxter", price: 72 }]},
+        { id:'2002', text:'2002', rowData:[
+                { make: "Toyota"    , model: "Celica", price: 35000 },
+                { make: "Ford"      , model: "Mondeo", price: 32000 },
+                { make: "Porsche"   , model: "Boxter", price: 72000 }]},
+        { id:'2003', text:'2003', rowData:[
+                { make: "Toyota"    , model: "Celica", price: 135000 },
+                { make: "Ford"      , model: "Mondeo", price: 132000 },
+                { make: "Porsche"   , model: "Boxter", price: 172000 }]},
+    ];
+    W2UI_TARIFF.init( 'tariffTabs', tabObj, tabObj[0]);
+
+
+    // setup the grid after the page has finished loading
+    document.addEventListener('DOMContentLoaded', () => {
+        let gridOptions = {
+            columnDefs: [
+                { field: "make" , width:100 },
+                { field: "model", width:100 },
+                { field: "price", width:100 }]
+        };
+        let agGridTmpl = $.templates("#agGridTemplate");
+
+        tabObj.forEach((tab)=> {
+            console.log(tab);
+
+            $("#gridList").append( agGridTmpl.render(tab) );
+            gridOptions.rowData = tab.rowData;
+            new agGrid.Grid(document.querySelector('#tariffGrid_'+tab.id), gridOptions);
+        });
+    });
+</script>
+
+<script id="agGridTemplate" type="text/x-jsrender">
+  <div id="tariffGrid_{{:id}}" style="height: 200px; width:310px;" class="ag-theme-alpine tariffGridTab"></div>
+</script>
+
+</body>
+</html>
+
