@@ -14,12 +14,12 @@
 </head>
 <body>
 
-<div id="tariffTabs" style="width: 100%;"></div>
+<div id="myTabs" style="width: 100%;"></div>
 <div id="gridList"></div>
 
 <script type="text/javascript">
 
-    let W2UI_TARIFF = {
+    let W2UI_MY = {
         api: {},
         event: {},
         data: {
@@ -35,13 +35,13 @@
             this.create();
         },
         create: function() {
-            $("#"+W2UI_TARIFF.data.id).w2tabs({
+            $("#"+W2UI_MY.data.id).w2tabs({
                 name: this.data.id,     // tabs id unique
                 tabs: this.data.tabs,
                 active: this.data.defaultTab.id,
                 onClick: (event)=>{
-                    $('.tariffGridTab').hide();
-                    $('#tariffGrid_'+event.target).show();
+                    $('.myGridTab').hide();
+                    $('#myGrid_'+event.target).show();
                 }
             });
         },
@@ -65,7 +65,7 @@
                 { make: "Ford"      , model: "Mondeo", price: 22000 },
                 { make: "Porsche"   , model: "Boxter", price: 22000 }]},
     ];
-    W2UI_TARIFF.init( 'tariffTabs', tabObj, tabObj[0]);
+    W2UI_MY.init( 'myTabs', tabObj, tabObj[0]);
 
 
     // setup the grid after the page has finished loading
@@ -79,20 +79,20 @@
         let agGridTmpl = $.templates("#agGridTemplate");
 
         tabObj.forEach((tab)=> {
-            // tariff grid div를 렌러링 하지만 default는 숨김(display:none;)
+            // my grid div를 렌러링 하지만 default는 숨김(display:none;)
             $("#gridList").append( agGridTmpl.render(tab) );
 
             gridOptions.rowData = tab.rowData;
-            new agGrid.Grid(document.querySelector('#tariffGrid_'+tab.id), gridOptions);
+            new agGrid.Grid(document.querySelector('#myGrid_'+tab.id), gridOptions);
         });
 
-        // tariffGridTab 클래스를 가지는 agGrid를 show
-        $('.tariffGridTab').first().show();
+        // myGridTab 클래스를 가지는 agGrid를 show
+        $('.myGridTab').first().show();
     });
 </script>
 
 <script id="agGridTemplate" type="text/x-jsrender">
-  <div id="tariffGrid_{{:id}}" style="height: 200px; width:310px; display:none;" class="ag-theme-alpine tariffGridTab"></div>
+  <div id="myGrid_{{:id}}" style="height: 200px; width:310px; display:none;" class="ag-theme-alpine myGridTab"></div>
 </script>
 
 </body>
