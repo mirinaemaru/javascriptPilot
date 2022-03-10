@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>agGrid에서 텍스트 입력 혹은 selectbox로 선택 후 agGrid데이터 읽기</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <style>
+        .numberCell {
+            text-align: right;
+        }
+    </style>
+
+<script type="text/javascript">
+    const columnDefs = [
+        { field:"make", width:100, cellClass:'stringType' },
+        { field:"model", width:100 },
+        { field:"price", width:100, editable:true,
+            type : 'numberType',
+            headerClass: 'numberCell',
+            cellClass: 'numberCell',
+            valueFormatter: function(params) {
+                console.log(params);
+                console.log(params.value);
+                // var number = (params.value).replace(/[^0-9]/g,'');
+                var number = params.value;
+                return number?number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):number;
+            },
+        }
+    ];
+
+    // specify the data
+    const rowData = [
+        { make: "Toyota", model: "Celica", price: 350 },
+        { make: "Ford", model: "Mondeo", price: 32000 },
+        { make: "Porsche", model: "Boxter", price: 72000 }
+    ];
+
+    // let the grid know which columns and what data to use
+    const gridOptions = {
+        columnDefs: columnDefs,
+        rowData: rowData
+    };
+
+    // setup the grid after the page has finished loading
+    document.addEventListener('DOMContentLoaded', () => {
+        const gridDiv = document.querySelector('#myGrid');
+        new agGrid.Grid(gridDiv, gridOptions);
+    });
+</script>
+</head>
+<body>
+
+<div id="myGrid" style="height: 200px; width:310px;" class="ag-theme-alpine"></div>
+
+</body>
+</html>
+
