@@ -1,9 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
+    <meta charset="utf-8">
     <title>agGrid에서 텍스트 입력 혹은 selectbox로 선택 후 agGrid데이터 읽기</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+
+<!--    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>-->
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-alpine.css">
+
     <style>
         .numberCell {
             text-align: right;
@@ -31,7 +38,9 @@
     // specify the data
     const rowData = [
         { make: "Toyota", model: "Celica", price: 350 },
+        { make: "현대", model: "싼타페", price: 12000 },
         { make: "Ford", model: "Mondeo", price: 32000 },
+        { make: "쌍용", model: "뭐더라", price: 7000 },
         { make: "Porsche", model: "Boxter", price: 72000 }
     ];
 
@@ -50,7 +59,7 @@
 </head>
 <body>
 
-<div id="myGrid" style="height: 200px; width:310px;" class="ag-theme-alpine"></div>
+<div id="myGrid" style="height: 700px; width:310px;" class="ag-theme-alpine"></div>
 
 </body>
 </html>

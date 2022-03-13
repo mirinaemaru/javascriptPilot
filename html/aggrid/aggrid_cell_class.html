@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>agGrid - cell 내용 편집 & style</title>
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <style>
+        .textCell {
+            text-align: left;
+        }
+        .boldCell {
+            font-weight: bold;
+        }
+        .unitCell {
+            text-align: center;
+        }
+        .redNumberCell {
+            text-align: right;
+            color: red;
+            background-color: gainsboro;
+        }
+        .blueNumberCell {
+            text-align: right;
+            color: blue;
+            background-color: aliceblue;
+        }
+    </style>
+<script type="text/javascript">
+    const columnDefs = [
+        { field:"make", width:100, cellClass:['textCell','boldCell']},
+        { field:"model", width:150, cellClass:'unitCell'},
+        { field:"price", width:100,
+            cellClass: params => {
+                return params.value>=0?'blueNumberCell':['redNumberCell', 'boldCell'];
+            }
+        }
+        // { field:"price", width:100,
+        //     cellClassRules: {
+        //         'redNumberCell': params => params.value>=1000,
+        //         'blueNumberCell': params => params.value<1000,
+        //     }
+        // }
+    ];
+
+    // specify the data
+    const rowData = [
+        { make: "Toyota", model: "Celica", price: 350 },
+        { make: "현대", model: "싼타페", price: -12000 },
+        { make: "Ford", model: "Mondeo", price: 32000 },
+        { make: "쌍용", model: "뭐더라", price: -7000 },
+        { make: "Volvo", model: "XC90", price: 117000 },
+        { make: "Porsche", model: "Boxter", price: 72000 }
+    ];
+
+    // let the grid know which columns and what data to use
+    const gridOptions = {
+        columnDefs: columnDefs,
+        rowData: rowData
+    };
+
+    // setup the grid after the page has finished loading
+    document.addEventListener('DOMContentLoaded', () => {
+        const gridDiv = document.querySelector('#myGrid');
+        new agGrid.Grid(gridDiv, gridOptions);
+    });
+</script>
+</head>
+<body>
+
+<div id="myGrid" style="height: 270px; width:370px;" class="ag-theme-balham"></div>
+
+</body>
+</html>
+
