@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>jquery - 전체 선택/해제 체크 박스</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://www.jsviews.com/samples/samples.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+    $(function(){
+        console.log( '>>> start...' );
+
+        $('#check_all').change(function(){
+            if($("#check_all").is(":checked")) {
+                $('input[id^="check_unit_"]').each((index, item) => {
+                    $(item).prop("checked", true);
+                });
+            }
+            else {
+                $('input[id^="check_unit_"]').each( (index,item)=>{
+                    $(item).prop("checked", false);
+                });
+            }
+        });
+    });
+    </script>
+
+</head>
+<body>
+
+<input type="checkbox" id="check_all" name="check_all"/> <b>전체 선택</b>         <br/><br/>
+<input type="checkbox" id="check_unit_01" name="check_unit"/> check unit 01     <br/>
+<input type="checkbox" id="check_unit_02" name="check_unit"/> check unit 02     <br/>
+<input type="checkbox" id="check_unit_03" name="check_unit"/> check unit 03     <br/>
+<input type="checkbox" id="check_unit_04" name="check_unit"/> check unit 04     <br/>
+<input type="checkbox" id="check_unit_05" name="check_unit"/> check unit 05     <br/>
+
+<script type="text/javascript">
+
+
+</script>
+
+
+</body>
+</html>
+
