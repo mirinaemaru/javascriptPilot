@@ -7,23 +7,8 @@
     <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
 
 <script type="text/javascript">
+    let idx = 0;
     const columnDefs = [
-        // { headerName : "Check", field : "CHK", minWidth:50, width:80, initialHide:false,
-        //     cellStyle: {"padding-top": "6px", "text-align": "center"},
-        //     cellRenderer : function(param) {
-        //         var input = document.createElement("input");
-        //
-        //         input.type = "checkbox";
-        //         input.value = '0';
-        //         input.checked = false;
-        //
-        //         input.onclick = function(){
-        //             params.setValue(this.checked === true ? '1' : '0');
-        //         }
-        //
-        //         return input;
-        //     }
-        // },
         {headerCheckboxSelection: true, checkboxSelection: true, maxWidth:50, filter:false, sortable:false, cellClass: 'stringType'},
         { field:"make", width:100},
         { field:"model", width:100 },
@@ -51,11 +36,28 @@
         const gridDiv = document.querySelector('#myGrid');
         new agGrid.Grid(gridDiv, gridOptions);
     });
+
+    function addRow() {
+        console.log('addRow');
+        idx++;
+        let newRow = { make: "Toyota"+idx, model: "Celica"+idx, price: 3500+idx*10 };
+        // 배열데이터 추가 가능, 즉, 여러개의 Row를 한꺼번에 Add 가능하다.
+        gridOptions.api.updateRowData({add:[newRow]});
+    }
+
+    function removeRow() {
+        console.log('removeRow');
+        let selectedData = gridOptions.api.getSelectedRows();
+        gridOptions.api.updateRowData({remove: selectedData});
+    }
 </script>
 </head>
 <body>
 
+
 <div id="myGrid" style="height: 250px; width:500px;" class="ag-theme-balham"></div>
+<button onclick="addRow()">Add</button>
+<button onclick="removeRow()">Remove</button>
 
 </body>
 </html>
