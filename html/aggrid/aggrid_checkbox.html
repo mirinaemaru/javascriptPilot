@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>agGrid - checkbox 체크박스</title>
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+
+<script type="text/javascript">
+    const columnDefs = [
+        // { headerName : "Check", field : "CHK", minWidth:50, width:80, initialHide:false,
+        //     cellStyle: {"padding-top": "6px", "text-align": "center"},
+        //     cellRenderer : function(param) {
+        //         var input = document.createElement("input");
+        //
+        //         input.type = "checkbox";
+        //         input.value = '0';
+        //         input.checked = false;
+        //
+        //         input.onclick = function(){
+        //             params.setValue(this.checked === true ? '1' : '0');
+        //         }
+        //
+        //         return input;
+        //     }
+        // },
+        {headerCheckboxSelection: true, checkboxSelection: true, maxWidth:50, filter:false, sortable:false, cellClass: 'stringType'},
+        { field:"make", width:100},
+        { field:"model", width:100 },
+        { field:"price", width:100}
+    ];
+
+    // specify the data
+    const rowData = [
+        { make: "Toyota", model: "Celica", price: 350 },
+        { make: "현대", model: "싼타페", price: 12000 },
+        { make: "Ford", model: "Mondeo", price: 32000 },
+        { make: "쌍용", model: "뭐더라", price: 7000 },
+        { make: "Porsche", model: "Boxter", price: 72000 }
+    ];
+
+    // let the grid know which columns and what data to use
+    const gridOptions = {
+        columnDefs: columnDefs,
+        rowData: rowData
+    };
+
+    // setup the grid after the page has finished loading
+    document.addEventListener('DOMContentLoaded', () => {
+        const gridDiv = document.querySelector('#myGrid');
+        new agGrid.Grid(gridDiv, gridOptions);
+    });
+</script>
+</head>
+<body>
+
+<div id="myGrid" style="height: 250px; width:500px;" class="ag-theme-balham"></div>
+
+</body>
+</html>
+
