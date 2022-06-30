@@ -8,22 +8,20 @@ let sortArray = [
     {name:'mirinae2', age:55},
 ];
 
-
-console.log('>>> before');
-console.log(sortArray);
-
+let beforeArray = JSON.parse(JSON.stringify(sortArray));
 
 sortArray.sort((a,b)=>{
-    if(a.name>b.name) {
+    if(a.age>b.age) {
         return 1;
     }
-    if(a.name<b.name) {
+    if(a.age<b.age) {
         return -1;
     }
     return 0;
 });
 
-
+console.log('>>> before');
+console.log(beforeArray);
 
 console.log('>>> after');
 console.log(sortArray);

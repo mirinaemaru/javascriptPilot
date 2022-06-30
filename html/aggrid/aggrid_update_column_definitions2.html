@@ -10,12 +10,25 @@
     <link href="https://www.jsviews.com/samples/samples.css" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.css" />
-
+    <style>{}
+        .readonlyCell {
+            text-align: right;
+            color: black;
+            background-color: gainsboro;
+        }
+        .editableCell {
+            text-align: right;
+            color: blue;
+            background-color: aliceblue;
+        }
+    </style>
 </head>
 <body>
 
-<div id="myTabs" style="width:250px;"></div>
+<div id="myTabs" style="width:350px;"></div>
 <div id="gridList"></div>
+<button onclick="fnEdit(true)">Editible:true</button>
+<button onclick="fnEdit(false)">Editible:false</button>
 
 <script type="text/javascript">
 
@@ -68,13 +81,20 @@
     W2UI_MY.init( 'myTabs', tabObj, tabObj[0]);
 
 
+    let gridOptions = {};
+
     // setup the grid after the page has finished loading
     document.addEventListener('DOMContentLoaded', () => {
-        let gridOptions = {
+        gridOptions = {
             columnDefs: [
                 { field: "make" , width:100 },
                 { field: "model", width:100 },
-                { field: "price", width:100, editable:true }]
+                { field: "price", width:100, editable:false, cellClassRules:{
+                        'readonlyCell': (params) => params.colDef.editable==false,
+                        'editableCell': (params) => params.colDef.editable==true,
+                    }
+                }
+            ]
         };
         let agGridTmpl = $.templates("#agGridTemplate");
 
@@ -89,10 +109,24 @@
         // myGridTab 클래스를 가지는 agGrid를 show
         $('.myGridTab').first().show();
     });
+
+    function fnEdit( editable ) {
+        console.clear();
+
+        gridOptions.columnApi.getAllColumns().forEach(function(col, i, arr){
+            if (col.colId == "price") {
+                col.colDef.editable = editable;
+            }
+        })
+
+        gridOptions.api.refreshCells({force:true,suppressFlash:true});
+    }
+
+
 </script>
 
 <script id="agGridTemplate" type="text/x-jsrender">
-  <div id="myGrid_{{:id}}" style="height: 200px; width:310px; display:none;" class="ag-theme-alpine myGridTab"></div>
+  <div id="myGrid_{{:id}}" style="height: 300px; width:410px; display:none;" class="ag-theme-alpine myGridTab"></div>
 </script>
 
 </body>
