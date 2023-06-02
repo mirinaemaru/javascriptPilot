@@ -41,12 +41,12 @@
         idx++;
         let newRow = { make: "Toyota"+idx, model: "Celica"+idx, price: 3500+idx*10 };
         // 배열데이터 추가 가능, 즉, 여러개의 Row를 한꺼번에 Add 가능하다.
-        gridOptions.api.updateRowData({add:[newRow]});
+        gridOptions.api.applyTransaction({add:[newRow]});
     }
 
     function removeRow() {
         let selectedData = gridOptions.api.getSelectedRows();
-        gridOptions.api.updateRowData({remove: selectedData});
+        gridOptions.api.applyTransaction({remove: selectedData});
     }
 </script>
 </head>

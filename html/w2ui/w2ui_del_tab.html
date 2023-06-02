@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>W2UI Demo: tabs/8, multi agGrid</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.js"></script>
+    <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js"></script>
+
+    <script src="https://www.jsviews.com/download/jsrender.min.js"></script>
+    <link href="https://www.jsviews.com/samples/samples.css" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.css" />
+
+</head>
+<body>
+
+<div id="myTabs" style="width:350px;"></div>
+<div id="gridList"></div>
+
+<script type="text/javascript">
+
+    let W2UI_MY = {
+        api: {},
+        event: {},
+        data: {
+            id: null,
+            tabs: null,
+            defaultTab: null,
+        },
+        init: function(tabsID, tabsObj, defaultTab) {
+            this.data.id = tabsID;
+            this.data.tabs = tabsObj;
+            this.data.defaultTab = defaultTab;
+
+            this.create();
+        },
+        create: function() {
+            $("#"+W2UI_MY.data.id).w2tabs({
+                name: this.data.id,     // tabs id unique
+                tabs: this.data.tabs,
+                active: this.data.defaultTab.id,
+                onClick: (event)=>{
+                    $('.myGridTab').hide();
+                    $('#myGrid_'+event.target).show();
+                },
+                onClose: (event)=> {
+                    console.log(event);
+                }
+            });
+        },
+    }
+
+    let tabObj = [
+        { id:'2011', text:'2011', closable:true, rowData:[
+                { make: "Toyota"    , model: "Celica", price: null },
+                { make: "Ford"      , model: "Mondeo", price: 32 },
+                { make: "Porsche"   , model: "Boxter", price: 72 }]},
+        { id:'2002', text:'2002', closable:true, rowData:[
+                { make: "Toyota"    , model: "Celica", price: null },
+                { make: "Ford"      , model: "Mondeo", price: 32000 },
+                { make: "Porsche"   , model: "Boxter", price: 72000 }]},
+        { id:'2003', text:'2003', closable:true, rowData:[
+                { make: "Toyota"    , model: "Celica", price: null },
+                { make: "Ford"      , model: "Mondeo", price: 132000 },
+                { make: "Porsche"   , model: "Boxter", price: 172000 }]},
+        { id:'2004', text:'2004', closable:true, rowData:[
+                { make: "Toyota"    , model: "Celica", price: null },
+                { make: "Ford"      , model: "Mondeo", price: 22000 },
+                { make: "Porsche"   , model: "Boxter", price: 22000 }]},
+    ];
+    W2UI_MY.init( 'myTabs', tabObj, tabObj[0]);
+
+
+    // setup the grid after the page has finished loading
+    document.addEventListener('DOMContentLoaded', () => {
+        let gridOptions = {
+            columnDefs: [
+                { field: "make" , width:100 },
+                { field: "model", width:100 },
+                { field: "price", width:100, editable:true }]
+        };
+        let agGridTmpl = $.templates("#agGridTemplate");
+
+        tabObj.forEach((tab)=> {
+            // my grid div를 렌러링 하지만 default는 숨김(display:none;)
+            $("#gridList").append( agGridTmpl.render(tab) );
+
+            gridOptions.rowData = tab.rowData;
+            new agGrid.Grid(document.querySelector('#myGrid_'+tab.id), gridOptions);
+        });
+
+        // myGridTab 클래스를 가지는 agGrid를 show
+        $('.myGridTab').first().show();
+    });
+</script>
+
+<script id="agGridTemplate" type="text/x-jsrender">
+  <div id="myGrid_{{:id}}" style="height: 200px; width:310px; display:none;" class="ag-theme-alpine myGridTab"></div>
+</script>
+
+</body>
+</html>
+

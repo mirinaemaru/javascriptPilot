@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>javascript 날짜(일수) 계산</title>
+
+<script type="text/javascript">
+    console.log( ">>> 날짜수 계산" );
+    let _fromDay = new Date("2022-10-15");
+    let _toDay = new Date("2022-10-12");
+
+    let msec = _toDay.getTime() - _fromDay.getTime();
+    let days = msec / (1000 * 60 * 60 * 24);
+
+    console.log( ">>> days : " + days );
+</script>
+
+
+</head>
+<body>
+
+
+<ul>
+    <li>javascript 날짜(일수) 계산 : console.log 확인</li>
+</ul>
+
+</body>
+</html>
