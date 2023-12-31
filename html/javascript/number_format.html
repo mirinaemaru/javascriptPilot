@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>javascript 날짜(일수) 계산</title>
+
+<script type="text/javascript">
+function formatNumber(params) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+
+    //console.log( params.value );
+    console.log( (typeof params === "number") );
+
+    if(params.value) {
+        return Math.floor(params.value).toString().replace(regexp, ',');
+    } else if (typeof params === "number") {
+        return Math.floor(params).toString().replace(regexp, ',');
+    } else if (typeof params === "string") {
+        return params.replace(regexp, ',');
+    } else {
+        //console.log("formatNumber에 type을 추가하세요");
+        //console.log(typeof params);
+    }
+}
+
+//let num1 = { value: 1.2345 }
+let num1 = 1.2345;
+console.log( ">>> num1 : " + num1 );
+console.log( ">>> num1 : " + formatNumber(num1) );
+
+let num2 = String(234);
+let str = num2.split(".")
+let rslt = "";
+console.log(num2);
+console.log("str["+0+"]" + str[0]);
+console.log("str["+1+"]" + str[1]);
+if( str[1] ) rslt = str[0]+"."+str[1];
+else rslt = str[0]
+
+console.log(">>> rslt : " + rslt);
+
+
+</script>
+
+
+</head>
+<body>
+
+
+<ul>
+    <li>javascript 날짜(일수) 계산 : console.log 확인</li>
+</ul>
+
+</body>
+</html>

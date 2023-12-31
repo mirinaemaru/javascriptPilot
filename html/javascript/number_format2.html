@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>javascript 숫자포맷</title>
+<script type="text/javascript">
+function addThousandSeparator(number) {
+
+    if( typeof number === "number" ) {
+        let numArr = String(number).split(".");
+        let returnNumber = numArr[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        if( numArr[1] ) returnNumber += "."+numArr[1];
+
+        return returnNumber;
+    }
+    else {
+        return number;
+    }
+
+}// 사용 예시
+const numberWithSeparator = addThousandSeparator(1234567.1234);
+console.log(numberWithSeparator); // 출력: "1,234,567.1234567"
+const numberWithSeparator1 = addThousandSeparator(.1234);
+console.log(numberWithSeparator1);
+const numberWithSeparator2 = addThousandSeparator(0.1234);
+console.log(numberWithSeparator2);
+const numberWithSeparator3 = addThousandSeparator(1212120);
+console.log(numberWithSeparator3);
+</script>
+</head>
+<body>
+<ul><li>javascript 숫자포멧 : console.log 확인</li></ul>
+</body>
+</html>
