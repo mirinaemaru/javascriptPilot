@@ -2,41 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>javascript prototype2</title>
+    <title>javascript async</title>
 <script type="text/javascript">
 <!--
-console.log("javascript prototype1");
+console.log("javascript async");
 
+async function fetchData() {
+    try {
+        let response = await fetch('https://api.example.com/data');
+        let data = await response.json();
+        return data;
+    } catch (error) {
+        console.log('Error fetching data:', error);
+    }
+}
 
-function Person(){}
+fetchData().then(result => {
+    console.log('Fetched data:', result);
+});
 
-let joon = new Person();
-let jisoo = new Person();
-
-Person.prototype.getType = function() {
-    return "인간";
-};
-
-Person.prototype.eyes = 2;
-
-console.log(joon.getType());
-console.log(jisoo.getType());
-console.log(joon.eyes);
-console.log(jisoo.eyes);
-
-let o = new Object();
-o.prototype.leg = 5;
-console.log(o);
 //-->
 </script>
 </head>
 <body>
-
-
 <ul>
-    <li>javascript prototype1</li>
+    <li>javascript async</li>
     <li>결과 확인은 console.log에서 확인할 수 있다.</li>
 </ul>
-
 </body>
 </html>
